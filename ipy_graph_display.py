@@ -1,7 +1,7 @@
 import tempfile
 import networkx as nx
 from networkx.drawing.nx_agraph import to_agraph
-from IPython.display import Image, display
+from IPython.display import Image, display, clear_output
 import time
 
 
@@ -22,7 +22,7 @@ class GraphAnimator():
         time_to_sleep = self._interval - time_since_last_display
         if time_to_sleep > 0:
             time.sleep(time_to_sleep)
+        clear_output(wait=True)
         display_graph(G)
         self._last_display_time = time.time()
-
-
+        
