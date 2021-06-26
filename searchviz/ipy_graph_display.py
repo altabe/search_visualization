@@ -3,16 +3,25 @@ import networkx as nx
 from networkx.drawing.nx_agraph import to_agraph
 from IPython.display import Image, display, clear_output
 import time
+from dataclasses import dataclass, field
+
+
+@dataclass
+class Step:
+    nodes: list = field(default_factory=list)
+    edges: list = field(default_factory=list)
+    type: str = None
 
 
 def display_graph(g):
     A = to_agraph(g)
-    A.layout(prog='dot')
-    with tempfile.NamedTemporaryFile(suffix='.png') as f:
+    A.layout(prog="dot")
+    with tempfile.NamedTemporaryFile(suffix=".png") as f:
         A.draw(f.name)
         display(Image(f.name))
 
-class GraphAnimator():
+
+class GraphAnimator:
     def __init__(self, plotting_interval_seconds=1) -> None:
         self._interval = plotting_interval_seconds
         self._last_display_time = time.time()
@@ -25,4 +34,3 @@ class GraphAnimator():
         clear_output(wait=True)
         display_graph(G)
         self._last_display_time = time.time()
-        
